@@ -102,7 +102,7 @@ app.get('/api/get-messages', (req, res) => {
     const { room } = req.query;
     const roomExists = activeRooms.find(r => r.name === room);
     
-    // Pokud místnost už není v seznamu (DM ji zavřel), pošleme klientům signál
+    
     if (!roomExists) {
         return res.json({ closed: true });
     }
