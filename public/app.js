@@ -42,7 +42,29 @@ function showSection(id) {
     document.querySelectorAll('section').forEach(s => s.style.display = 'none');
     document.getElementById('sec-' + id).style.display = 'block';
     if (id === 'chronicle') renderChronicle();
+    if (id === 'main-room') fetchRooms(); 
     if (id !== 'room') stopSync();
+}
+
+async function fetchMessages() {
+    const res = await fetch(`/api/get-messages?room=${activeRoom}`);
+    const data = await res.json();
+    
+    
+    if (data.closed) {
+        stopSync();
+        alert("Pán jeskyně (DM) opustil hru. Místnost byla uzavřena!");
+        activeRoom = null;
+        showSection('main-room');
+        return;
+    }
+
+    const box = document.getElementById('chat-box');
+    box.innerHTML = data.messages.map(m => `
+        <div class="chat-msg-item ${m.isRoll?'roll-msg':''}">
+            <small>${m.time}</small> <b>${m.sender}:</b> ${m.text}
+        </div>`).join('');
+    box.scrollTop = box.scrollHeight;
 }
 
 async function saveCharacter() {
