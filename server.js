@@ -8,7 +8,36 @@ app.use(express.json());
 app.use(cors());
 
 const dataFile = 'users.json';
-let chatMessages = []; // Dočasné zprávy v paměti
+let chatMessages = []; 
+
+let activeRooms = []; 
+
+app.post('/api/create-room', (req, res) => {
+    const { roomName, dm } = req.body;
+    if (activeRooms.find(r => r.name === roomName)) {
+        return res.json({ success: false, message: 'Místnost s tímto názvem už existuje!' });
+    }
+    activeRooms.push({ name: roomName, dm: dm });
+    res.json({ success: true });
+});
+
+
+app.get('/api/get-rooms', (req, res) => {
+    res.json(activeRooms);
+});
+
+
+app.post('/api/leave-room', (req, res) => {
+    const { room, username } = req.body;
+    const roomObj = activeRooms.find(r => r.name === room);
+    
+    if (roomObj && roomObj.dm === username) {
+      
+        activeRooms = activeRooms.filter(r => r.name !== room);
+        chatMessages = chatMessages.filter(m => m.room !== room); 
+    }
+    res.json({ success: true });
+});
 
 function loadData() {
     if (!fs.existsSync(dataFile)) return { users: [] };
@@ -19,7 +48,7 @@ function saveData(data) {
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 }
 
-// Auth API
+
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
     const data = loadData();
@@ -60,12 +89,12 @@ app.post('/api/delete-character', (req, res) => {
     }
 });
 
-// Chat API
+
 app.post('/api/send-message', (req, res) => {
     const { room, sender, text, isRoll } = req.body;
     const newMessage = { id: Date.now(), room, sender, text, isRoll, time: new Date().toLocaleTimeString() };
     chatMessages.push(newMessage);
-    if (chatMessages.length > 50) chatMessages.shift(); // Limit 50 zpráv
+    if (chatMessages.length > 50) chatMessages.shift(); 
     res.json({ success: true });
 });
 
