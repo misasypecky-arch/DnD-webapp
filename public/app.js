@@ -206,16 +206,7 @@ function enterRoom(char) {
     syncInterval = setInterval(fetchMessages, 1000); // Kontrola zpráv každou sekundu
 }
 
-async function fetchMessages() {
-    const res = await fetch(`/api/get-messages?room=${activeRoom}`);
-    const msgs = await res.json();
-    const box = document.getElementById('chat-box');
-    box.innerHTML = msgs.map(m => `
-        <div class="chat-msg-item ${m.isRoll?'roll-msg':''}">
-            <small>${m.time}</small> <b>${m.sender}:</b> ${m.text}
-        </div>`).join('');
-    box.scrollTop = box.scrollHeight;
-}
+
 
 async function sendLiveMessage(text, isRoll = false) {
     await fetch('/api/send-message', {
