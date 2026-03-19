@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "username": "root",
+      "password": "root",
+      "characters": []
+    },
+    {
+      "username": "karel",
+      "password": "karel",
+      "characters": []
+    }
+  ],
+  "rooms": []
+}

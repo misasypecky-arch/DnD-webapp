@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>DnD Tavern</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">DnD Tavern</div>
+        <div class="nav-links">
+            <button onclick="showSection('main-room')" class="secondary">Taverna</button>
+            <button onclick="showSection('chronicle')" class="secondary">Kronika</button>
+            <button onclick="logout()" class="secondary">Odhlásit</button>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <section id="sec-main-room">
+            <h1>Taverna "U Spícího Draka"</h1>
+            <div class="panel-grid">
+                <div class="sub-panel">
+                    <h3>Aktivní Výpravy</h3>
+                    <div id="room-list">
+                        <div class="card">
+                            <span>Dračí Doupě (DM: root)</span>
+                            <button onclick="openJoinModal('Dračí Doupě')" style="width: auto; float: right;">Vstoupit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-panel">
+                    <h3>Rychlé akce</h3>
+                    <button onclick="showSection('creator')">Vytvořit novou postavu</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-chronicle" style="display:none;">
+            <h1>Kronika Tvých Hrdinů</h1>
+            <div id="my-characters-list" class="chronicle-grid"></div>
+        </section>
+
+        <section id="sec-creator" style="display:none;">
+    <h1>Tvorba Hrdiny</h1>
+    <div class="panel-grid">
+        <div class="sub-panel">
+            <h3>Základní informace</h3>
+            <label>Jméno hrdiny</label>
+            <input type="text" id="charName" placeholder="Např. Elara">
+
+            <div style="display: flex; gap: 10px;">
+                <div style="flex:1">
+                    <label>Rasa / Species</label>
+                    <select id="charRace" onchange="updateSubraces()">
+                        <optgroup label="Základní">
+                            <option>Human</option><option>Elf</option><option>Dwarf</option>
+                            <option>Halfling</option><option>Dragonborn</option><option>Gnome</option>
+                            <option>Tiefling</option><option>Orc</option><option>Aasimar</option><option>Goliath</option>
+                        </optgroup>
+                        <optgroup label="Exotické">
+                            <option>Aarakocra</option><option>Tabaxi</option><option>Warforged</option>
+                            <option>Tortle</option><option>Lizardfolk</option><option>Changeling</option>
+                            <option>Genasi</option><option>Harengon</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div style="flex:1">
+                    <label>Podrasa (volitelné)</label>
+                    <input type="text" id="charSubrace" placeholder="Např. High Elf">
+                </div>
+            </div>
+
+            <label>Povolání / Class</label>
+            <select id="charClass">
+                <option>Fighter</option><option>Wizard</option><option>Rogue</option>
+                <option>Cleric</option><option>Barbarian</option><option>Bard</option>
+                <option>Paladin</option><option>Ranger</option><option>Sorcerer</option>
+                <option>Warlock</option><option>Druid</option><option>Monk</option>
+            </select>
+
+            <label>Background (Původ)</label>
+            <input type="text" id="charBackground" placeholder="Např. Soldier, Acolyte...">
+
+            <div style="display: flex; gap: 10px;">
+                <div style="flex:1">
+                    <label>Alignment</label>
+                    <select id="charAlignment">
+                        <option>Lawful Good</option><option>Neutral Good</option><option>Chaotic Good</option>
+                        <option>Lawful Neutral</option><option>True Neutral</option><option>Chaotic Neutral</option>
+                        <option>Lawful Evil</option><option>Neutral Evil</option><option>Chaotic Evil</option>
+                    </select>
+                </div>
+                <div style="flex:1">
+                    <label>Proficiency Bonus</label>
+                    <input type="number" id="charProficiency" value="2">
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-panel">
+            <h3>Ability Scores (Vlastnosti)</h3>
+            <div class="stats-grid-6">
+                <div class="stat-item"><label title="Physical power">STR</label><input type="number" id="statStr" value="10"></div>
+                <div class="stat-item"><label title="Agility & Reflexes">DEX</label><input type="number" id="statDex" value="10"></div>
+                <div class="stat-item"><label title="Health & Endurance">CON</label><input type="number" id="statCon" value="10"></div>
+                <div class="stat-item"><label title="Reasoning & Memory">INT</label><input type="number" id="statInt" value="10"></div>
+                <div class="stat-item"><label title="Perception & Insight">WIS</label><input type="number" id="statWis" value="10"></div>
+                <div class="stat-item"><label title="Personality">CHA</label><input type="number" id="statCha" value="10"></div>
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 0.8em; color: var(--text-muted);">
+                Tip: Použij <b>Standard Array</b> (15, 14, 13, 12, 10, 8)
+            </div>
+
+            <label style="margin-top: 20px;">Vybavení a poznámky</label>
+            <textarea id="charInventory" placeholder="Meč, batoh, 5 zlatých..." style="height: 100px;"></textarea>
+
+            <button onclick="saveCharacter()" style="margin-top:20px; width: 100%;">Vdechnout postavě život</button>
+        </div>
+    </div>
+</section>
+
+        <section id="sec-room" style="display:none;">
+            <h1 id="active-room-title">Výprava</h1>
+            <div class="chat-area">
+                <div id="chat-box" class="scroll-box"></div>
+                <div class="chat-input-row">
+                    <button class="dice-btn" onclick="rollD20()">🎲 d20</button>
+                    <input type="text" id="chat-msg" placeholder="Napiš DM..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="join-modal" class="modal">
+        <div class="modal-content sub-panel">
+            <h3>Vyber si hrdinu</h3>
+            <div id="modal-char-list"></div>
+            <button onclick="closeModal()" class="secondary">Zrušit</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+/* Ponecháváme tvoje :root a základní styly z loginu */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600&display=swap');
+
+:root {
+    --bg-deep: #0b0c10;
+    --bg-panel: #1c1d25;
+    --bg-input: #252732;
+    --text-main: #d1d5db;
+    --text-muted: #8b949e;
+    --accent-gold: #d4af37;
+    --accent-gold-hover: #f1c40f;
+    --accent-red: #9e1a1a;
+    --accent-red-hover: #c92a2a;
+    --border-color: #3d405b;
+}
+
+/* Celkové rozvržení stránky */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg-deep);
+    background-image: radial-gradient(circle at center, #15161c 0%, #0b0c10 100%);
+    color: var(--text-main);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    background: var(--bg-panel);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
+    text-align: center;
+}
+
+/* Hlavní kontejner - stejný styl jako tvůj Login Box, ale širší */
+.app-container {
+    width: 95%;
+    max-width: 1100px;
+    background: var(--bg-panel);
+    padding: 30px;
+    margin-top: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+h1, h2, h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--accent-gold);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h1 { border-bottom: 2px solid var(--accent-red); padding-bottom: 15px; }
+
+/* Rozdělení na panely (Bio / Stats / Combat) */
+.panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.sub-panel {
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+/* Styl pro staty (STR, DEX...) - hezká mřížka */
+.stats-flex {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    text-align: center;
+}
+
+.stat-item {
+    background: var(--bg-input);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item label {
+    font-weight: bold;
+    color: var(--accent-gold);
+    margin-bottom: 5px;
+    cursor: help; 
+}
+
+.stat-item input {
+    width: 50px;
+    text-align: center;
+    font-size: 1.2em;
+    font-family: 'Cinzel', serif;
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+/* Tlačítka s tvým červeným gradientem */
+button {
+    background: linear-gradient(180deg, var(--accent-red) 0%, #5c0f0f 100%);
+    color: white;
+    border: 1px solid #444;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+button:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 15px rgba(158, 26, 26, 0.4);
+}
+
+button.secondary {
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* Vstupy */
+input, select, textarea {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.chronicle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+.modal-content { width: 350px; margin: 15% auto; background: var(--bg-panel); border: 2px solid var(--accent-gold); }
+.scroll-box { height: 350px; background: #000; overflow-y: auto; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
+.chat-msg-item { margin-bottom: 10px; border-left: 2px solid var(--accent-red); padding-left: 10px; font-size: 0.9em; }
+.chat-msg-item small { color: var(--text-muted); display: block; font-size: 0.7em; }
+.roll-msg { border-left: 4px solid var(--accent-gold); background: rgba(212, 175, 55, 0.1); color: var(--accent-gold); font-weight: bold; }
+.chat-input-row { display: flex; gap: 10px; }
+.dice-btn { width: 70px !important; background: var(--accent-gold) !important; color: black !important; }
+optgroup {
+    background: var(--bg-panel);
+    color: var(--accent-gold);
+    font-style: normal;
+}
+.stats-grid-6 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 sloupce ve dvou řadách */
+    gap: 10px;
+}
