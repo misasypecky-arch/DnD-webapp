@@ -3,7 +3,7 @@ let activeRoom = null;
 let selectedCharacter = null;
 let syncInterval = null;
 
-// --- LOGIN LOGIKA ---
+
 async function login() {
     const u = document.getElementById('username').value;
     const p = document.getElementById('password').value;
@@ -33,7 +33,7 @@ async function register() {
     alert(data.success ? "Účet vytvořen! Teď se přihlas." : data.message);
 }
 
-// --- APP LOGIKA ---
+
 if (!currentUser && window.location.pathname.includes('app.html')) {
     window.location.href = 'login.html';
 }
@@ -78,7 +78,7 @@ async function saveCharacter() {
         currentUser.characters = data.characters;
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
         showSection('main-room');
-        // Vyčistit pole pro příště
+        
         document.getElementById('charName').value = "";
     }
 }
@@ -109,7 +109,58 @@ async function deleteChar(idx) {
     renderChronicle();
 }
 
-// --- ROOM & CHAT LOGIKA ---
+async function fetchRooms() {
+    const res = await fetch('/api/get-rooms');
+    const rooms = await res.json();
+    const list = document.getElementById('room-list');
+    list.innerHTML = '';
+    
+    if (rooms.length === 0) {
+        list.innerHTML = '<p style="color: gray;">Zatím tu nejsou žádné aktivní výpravy.</p>';
+        return;
+    }
+    
+    rooms.forEach(r => {
+        list.innerHTML += `
+        <div class="card">
+            <span><strong>${r.name}</strong> <br><small>DM: ${r.dm}</small></span>
+            <button onclick="openJoinModal('${r.name}')" style="width: auto; float: right; margin-top: -15px;">Vstoupit</button>
+        </div>`;
+    });
+}
+
+async function createRoom() {
+    const name = document.getElementById('new-room-name').value.trim();
+    if (!name) return alert("Musíš zadat název výpravy!");
+    
+    const res = await fetch('/api/create-room', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomName: name, dm: currentUser.username })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+        document.getElementById('new-room-name').value = '';
+        fetchRooms(); 
+    } else {
+        alert(data.message);
+    }
+}
+
+async function leaveRoom() {
+    if (activeRoom) {
+       
+        await fetch('/api/leave-room', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ room: activeRoom, username: currentUser.username })
+        });
+    }
+    activeRoom = null;
+    showSection('main-room');
+}
+
 function openJoinModal(room) {
     activeRoom = room;
     document.getElementById('join-modal').style.display = 'block';
