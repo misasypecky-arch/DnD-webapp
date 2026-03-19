@@ -22,7 +22,7 @@ Klokálnímu spuštění serveru je potřeba mít nainstalované prostředí **N
 
 1. **Stažení repozitáře:**
    Stáhněte si tento repozitář jako .zip soubor a rozbalte ho, nebo použijte Git příkaz v konzoli:
-   `git clone [VLOŽ_SVŮJ_ODKAZ_NA_GIT]`
+   `git clone https://github.com/misasypecky-arch/DnD-webapp/tree/main`
 
 2. **Instalace závislostí:**
    Otevřete konzoli (příkazový řádek) ve složce s projektem (tam, kde je soubor `server.js`) a spusťte příkaz:
