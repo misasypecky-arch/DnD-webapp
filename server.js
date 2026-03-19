@@ -100,7 +100,14 @@ app.post('/api/send-message', (req, res) => {
 
 app.get('/api/get-messages', (req, res) => {
     const { room } = req.query;
-    res.json(chatMessages.filter(m => m.room === room));
+    const roomExists = activeRooms.find(r => r.name === room);
+    
+    // Pokud místnost už není v seznamu (DM ji zavřel), pošleme klientům signál
+    if (!roomExists) {
+        return res.json({ closed: true });
+    }
+    
+    res.json({ closed: false, messages: chatMessages.filter(m => m.room === room) });
 });
 
 app.get('/', (req, res) => res.redirect('/login.html'));
