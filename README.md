@@ -3,7 +3,7 @@
 DnD Tavern je odlehčená webová aplikace pro hráče stolních RPG her. Nabízí tvorbu a správu hrdinů (deník postavy) a virtuální herní místnosti s živým chatem a integrovanými hody kostkou (d20).
 
 ##  Požadavky k běhu aplikace
-Klokálnímu spuštění serveru je potřeba mít nainstalované prostředí **Node.js**. 
+K lokálnímu spuštění serveru je potřeba mít nainstalované prostředí **Node.js**. 
 
 ### Jak nainstalovat Node.js:
 **A) Klasicky (Nejjednodušší způsob pro Windows/macOS):**
