@@ -66,7 +66,6 @@ app.post('/api/register', (req, res) => {
     res.json({ success: true });
 });
 
-// Character API
 app.post('/api/save-character', (req, res) => {
     const { username, character } = req.body;
     let data = loadData();
