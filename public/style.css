@@ -1,4 +1,4 @@
-/* Ponecháváme tvoje :root a základní styly z loginu */
+
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600&display=swap');
 
 :root {
@@ -14,7 +14,7 @@
     --border-color: #3d405b;
 }
 
-/* Celkové rozvržení stránky */
+
 body {
     font-family: 'Nunito', sans-serif;
     background-color: var(--bg-deep);
@@ -37,7 +37,7 @@ body {
     text-align: center;
 }
 
-/* Hlavní kontejner - stejný styl jako tvůj Login Box, ale širší */
+
 .app-container {
     width: 95%;
     max-width: 1100px;
@@ -58,7 +58,7 @@ h1, h2, h3 {
 
 h1 { border-bottom: 2px solid var(--accent-red); padding-bottom: 15px; }
 
-/* Rozdělení na panely (Bio / Stats / Combat) */
+
 .panel-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -73,7 +73,7 @@ h1 { border-bottom: 2px solid var(--accent-red); padding-bottom: 15px; }
     border: 1px solid var(--border-color);
 }
 
-/* Styl pro staty (STR, DEX...) - hezká mřížka */
+
 .stats-flex {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -108,7 +108,7 @@ h1 { border-bottom: 2px solid var(--accent-red); padding-bottom: 15px; }
     color: white;
 }
 
-/* Tlačítka s tvým červeným gradientem */
+
 button {
     background: linear-gradient(180deg, var(--accent-red) 0%, #5c0f0f 100%);
     color: white;
@@ -133,7 +133,7 @@ button.secondary {
     color: var(--accent-gold);
 }
 
-/* Vstupy */
+
 input, select, textarea {
     background: var(--bg-input);
     border: 1px solid var(--border-color);
